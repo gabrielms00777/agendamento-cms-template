@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Admin - Painel Geral</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --topbar-height: 60px;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            background: #2c3e50;
+            transition: all 0.3s;
+        }
+
+        .topbar {
+            height: var(--topbar-height);
+            margin-left: var(--sidebar-width);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            margin-top: var(--topbar-height);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid #3498db;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar d-flex flex-column">
+        <div class="p-3 text-white">
+            <h4 class="text-center">Admin Geral</h4>
+            <hr class="bg-light">
+        </div>
+        <ul class="nav flex-column flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">
+                    <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-building me-2"></i> Estabelecimentos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-people me-2"></i> Usuários
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-credit-card me-2"></i> Assinaturas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-graph-up me-2"></i> Analytics
+                </a>
+            </li>
+            <li class="nav-item mt-auto">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-gear me-2"></i> Configurações
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Topbar -->
+    <nav class="topbar navbar navbar-expand navbar-dark bg-primary shadow-sm">
+        <div class="container-fluid">
+            <span class="navbar-brand">Painel de Controle</span>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-1"></i> Super Admin
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i> Perfil</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i> Sair</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Gerenciamento de Estabelecimentos</h2>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#novoEstabelecimentoModal">
+                    <i class="bi bi-plus-lg me-1"></i> Adicionar Estabelecimento
+                </button>
+            </div>
+
+            <!-- Filtros e Busca -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label">Plano</label>
+                            <select class="form-select">
+                                <option>Todos</option>
+                                <option>Grátis</option>
+                                <option>Premium</option>
+                                <option>Enterprise</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Status</label>
+                            <select class="form-select">
+                                <option>Todos</option>
+                                <option>Ativo</option>
+                                <option>Inativo</option>
+                                <option>Suspenso</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Buscar</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Nome, CNPJ...">
+                                <button class="btn btn-outline-secondary" type="button">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Estabelecimentos -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>Proprietário</th>
+                                    <th>Plano</th>
+                                    <th>Status</th>
+                                    <th>Cadastro</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#1001</td>
+                                    <td>
+                                        <strong>Salão Bella</strong><br>
+                                        <small class="text-muted">salão@email.com</small>
+                                    </td>
+                                    <td>Maria Silva</td>
+                                    <td><span class="badge bg-success">Premium</span></td>
+                                    <td><span class="badge bg-success">Ativo</span></td>
+                                    <td>15/05/2023</td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-primary" title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-outline-secondary" title="Detalhes">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-outline-danger" title="Suspender">
+                                                <i class="bi bi-slash-circle"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#1002</td>
+                                    <td>
+                                        <strong>Clínica Saúde</strong><br>
+                                        <small class="text-muted">clinica@email.com</small>
+                                    </td>
+                                    <td>Carlos Mendes</td>
+                                    <td><span class="badge bg-primary">Grátis</span></td>
+                                    <td><span class="badge bg-warning text-dark">Pendente</span></td>
+                                    <td>10/06/2023</td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-primary">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-outline-secondary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-outline-success">
+                                                <i class="bi bi-check-circle"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Mais estabelecimentos... -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Paginação -->
+                    <nav class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Próxima</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Estatísticas Rápidas -->
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Total de Estabelecimentos</h5>
+                            <h2 class="text-primary">128</h2>
+                            <div class="d-flex justify-content-around">
+                                <div>
+                                    <small class="text-muted">Ativos</small>
+                                    <h5 class="text-success">104</h5>
+                                </div>
+                                <div>
+                                    <small class="text-muted">Inativos</small>
+                                    <h5 class="text-danger">24</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Distribuição por Plano</h5>
+                            <div class="d-flex justify-content-around mt-3">
+                                <div>
+                                    <small class="text-muted">Grátis</small>
+                                    <h5 class="text-secondary">42</h5>
+                                </div>
+                                <div>
+                                    <small class="text-muted">Premium</small>
+                                    <h5 class="text-success">68</h5>
+                                </div>
+                                <div>
+                                    <small class="text-muted">Enterprise</small>
+                                    <h5 class="text-info">18</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Receita Mensal</h5>
+                            <h2 class="text-success">R$ 28,750</h2>
+                            <small class="text-muted">+12% em relação ao mês passado</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Novo Estabelecimento (Exemplo) -->
+    <!-- Modal de Novo Estabelecimento -->
+    <div class="modal fade" id="novoEstabelecimentoModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Cadastrar Novo Estabelecimento</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEstabelecimento">
+                        <ul class="nav nav-tabs mb-4" id="estabTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="dados-tab" data-bs-toggle="tab"
+                                    data-bs-target="#dados" type="button">Dados Básicos</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="plano-tab" data-bs-toggle="tab" data-bs-target="#plano"
+                                    type="button">Plano</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="config-tab" data-bs-toggle="tab" data-bs-target="#config"
+                                    type="button">Configurações</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="estabTabContent">
+                            <!-- ABA 1: Dados Básicos -->
+                            <div class="tab-pane fade show active" id="dados" role="tabpanel">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="nome" class="form-label">Nome do Estabelecimento*</label>
+                                        <input type="text" class="form-control" id="nome" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="categoria" class="form-label">Categoria*</label>
+                                        <select class="form-select" id="categoria" required>
+                                            <option value="">Selecione...</option>
+                                            <option>Saúde & Bem-estar</option>
+                                            <option>Beleza</option>
+                                            <option>Educação</option>
+                                            <option>Serviços Profissionais</option>
+                                            <option>Outros</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="responsavel" class="form-label">Responsável*</label>
+                                        <input type="text" class="form-control" id="responsavel" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label">E-mail*</label>
+                                        <input type="email" class="form-control" id="email" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="telefone" class="form-label">Telefone*</label>
+                                        <input type="tel" class="form-control" id="telefone" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="cnpj" class="form-label">CNPJ</label>
+                                        <input type="text" class="form-control" id="cnpj">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="inscricao" class="form-label">Inscrição Estadual</label>
+                                        <input type="text" class="form-control" id="inscricao">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ABA 2: Plano -->
+                            <div class="tab-pane fade" id="plano" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card h-100 border-primary">
+                                            <div class="card-header bg-primary text-white">
+                                                <h5 class="mb-0">Plano Básico</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <h3 class="card-title pricing-card-title">R$ 0<small
+                                                        class="text-muted fw-light">/mês</small></h3>
+                                                <ul class="list-unstyled mt-3 mb-4">
+                                                    <li><i class="bi bi-check text-success"></i> 1 Profissional</li>
+                                                    <li><i class="bi bi-check text-success"></i> Até 50 agendamentos/mês
+                                                    </li>
+                                                    <li><i class="bi bi-check text-success"></i> Notificações por e-mail
+                                                    </li>
+                                                    <li><i class="bi bi-x text-danger"></i> WhatsApp Marketing</li>
+                                                    <li><i class="bi bi-x text-danger"></i> Relatórios avançados</li>
+                                                </ul>
+                                            </div>
+                                            <div class="card-footer bg-white">
+                                                <button type="button" class="btn btn-outline-primary w-100 plano-select"
+                                                    data-plano="basico">Selecionar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card h-100 border-success">
+                                            <div class="card-header bg-success text-white">
+                                                <h5 class="mb-0">Plano Premium</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <h3 class="card-title pricing-card-title">R$ 97<small
+                                                        class="text-muted fw-light">/mês</small></h3>
+                                                <ul class="list-unstyled mt-3 mb-4">
+                                                    <li><i class="bi bi-check text-success"></i> 5 Profissionais</li>
+                                                    <li><i class="bi bi-check text-success"></i> Agendamentos ilimitados
+                                                    </li>
+                                                    <li><i class="bi bi-check text-success"></i> Notificações por e-mail
+                                                        e WhatsApp</li>
+                                                    <li><i class="bi bi-check text-success"></i> Relatórios básicos</li>
+                                                    <li><i class="bi bi-x text-danger"></i> Consultoria mensal</li>
+                                                </ul>
+                                            </div>
+                                            <div class="card-footer bg-white">
+                                                <button type="button" class="btn btn-success w-100 plano-select"
+                                                    data-plano="premium">Selecionar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="planoSelecionado" name="plano" value="">
+                                </div>
+                            </div>
+
+                            <!-- ABA 3: Configurações -->
+                            <div class="tab-pane fade" id="config" role="tabpanel">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="url" class="form-label">URL Personalizada</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">seusistema.com/</span>
+                                            <input type="text" class="form-control" id="url">
+                                        </div>
+                                        <small class="text-muted">Máximo 20 caracteres, sem espaços ou acentos</small>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="cor" class="form-label">Cor Principal</label>
+                                        <input type="color" class="form-control form-control-color" id="cor"
+                                            value="#0d6efd">
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="logo" class="form-label">Logo</label>
+                                        <input class="form-control" type="file" id="logo" accept="image/*">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="notificacoes" checked>
+                                            <label class="form-check-label" for="notificacoes">Ativar notificações por
+                                                e-mail</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnSalvarEstabelecimento">Salvar
+                        Estabelecimento</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Lógica para seleção de planos
+        document.querySelectorAll('.plano-select').forEach(btn => {
+            btn.addEventListener('click', function () {
+                // Remove destaque de todos os botões
+                document.querySelectorAll('.plano-select').forEach(b => {
+                    b.classList.remove('active');
+                    b.classList.remove('btn-success');
+                    b.classList.add('btn-outline-primary');
+                });
+
+                // Destaca o selecionado
+                this.classList.remove('btn-outline-primary');
+                this.classList.add('btn-success', 'active');
+                document.getElementById('planoSelecionado').value = this.dataset.plano;
+            });
+        });
+
+        // Validação antes de enviar
+        document.getElementById('btnSalvarEstabelecimento').addEventListener('click', function () {
+            const form = document.getElementById('formEstabelecimento');
+            if (!form.checkValidity()) {
+                alert('Preencha todos os campos obrigatórios!');
+                return;
+            }
+
+            if (!document.getElementById('planoSelecionado').value) {
+                alert('Selecione um plano para continuar!');
+                document.getElementById('plano-tab').click();
+                return;
+            }
+
+            // Aqui viria a lógica de envio do formulário
+            alert('Estabelecimento cadastrado com sucesso!');
+            // Fechar modal
+            bootstrap.Modal.getInstance(document.getElementById('novoEstabelecimentoModal')).hide();
+        });
+    </script>
+
+    
+    <script>
+        // Ativa tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+        // Exemplo de interação - seria substituído por código real
+        document.querySelectorAll('.btn-outline-danger').forEach(btn => {
+            btn.addEventListener('click', () => {
+                alert('Ação de suspender seria implementada aqui');
+            });
+        });
+    </script>
+</body>
+
+</html>

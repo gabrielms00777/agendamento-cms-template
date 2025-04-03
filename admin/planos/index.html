@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Admin - Painel Geral</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --topbar-height: 60px;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            background: #2c3e50;
+            transition: all 0.3s;
+        }
+
+        .topbar {
+            height: var(--topbar-height);
+            margin-left: var(--sidebar-width);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            margin-top: var(--topbar-height);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid #3498db;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .timeline-badge {
+            position: absolute;
+            left: -20px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .timeline-content {
+            padding-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar d-flex flex-column">
+        <div class="p-3 text-white">
+            <h4 class="text-center">Admin Geral</h4>
+            <hr class="bg-light">
+        </div>
+        <ul class="nav flex-column flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">
+                    <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-building me-2"></i> Estabelecimentos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-people me-2"></i> Usuários
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-credit-card me-2"></i> Assinaturas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-graph-up me-2"></i> Analytics
+                </a>
+            </li>
+            <li class="nav-item mt-auto">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-gear me-2"></i> Configurações
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Topbar -->
+    <nav class="topbar navbar navbar-expand navbar-dark bg-primary shadow-sm">
+        <div class="container-fluid">
+            <span class="navbar-brand">Painel de Controle</span>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-1"></i> Super Admin
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i> Perfil</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i> Sair</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- Cabeçalho + Botão -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="bi bi-stack me-2"></i> Planos Disponíveis</h2>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNovoPlano">
+                    <i class="bi bi-plus-circle me-1"></i> Criar Plano
+                </button>
+            </div>
+    
+            <!-- Cards de Planos -->
+            <div class="row g-4">
+                <!-- Plano Grátis -->
+                <div class="col-md-4">
+                    <div class="card border-secondary h-100">
+                        <div class="card-header bg-secondary text-white">
+                            <h5 class="mb-0">Grátis</h5>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title pricing-card-title">R$ 0<small class="text-muted fw-light">/mês</small></h3>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li><i class="bi bi-check text-success me-2"></i> 1 Profissional</li>
+                                <li><i class="bi bi-check text-success me-2"></i> 50 agendamentos/mês</li>
+                                <li><i class="bi bi-x text-danger me-2"></i> WhatsApp Marketing</li>
+                                <li><i class="bi bi-x text-danger me-2"></i> Relatórios avançados</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer bg-white">
+                            <button class="btn btn-outline-secondary w-100 me-2" data-bs-toggle="modal" data-bs-target="#modalEditarPlano">
+                                <i class="bi bi-pencil"></i> Editar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Plano Premium -->
+                <div class="col-md-4">
+                    <div class="card border-success h-100">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0">Premium</h5>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title pricing-card-title">R$ 97<small class="text-muted fw-light">/mês</small></h3>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li><i class="bi bi-check text-success me-2"></i> 5 Profissionais</li>
+                                <li><i class="bi bi-check text-success me-2"></i> Agendamentos ilimitados</li>
+                                <li><i class="bi bi-check text-success me-2"></i> WhatsApp Marketing</li>
+                                <li><i class="bi bi-x text-danger me-2"></i> Consultoria mensal</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer bg-white">
+                            <button class="btn btn-outline-success w-100" data-bs-toggle="modal" data-bs-target="#modalEditarPlano">
+                                <i class="bi bi-pencil"></i> Editar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Plano Enterprise -->
+                <div class="col-md-4">
+                    <div class="card border-primary h-100">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Enterprise</h5>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title pricing-card-title">R$ 297<small class="text-muted fw-light">/mês</small></h3>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li><i class="bi bi-check text-success me-2"></i> Profissionais ilimitados</li>
+                                <li><i class="bi bi-check text-success me-2"></i> Multi-filiais</li>
+                                <li><i class="bi bi-check text-success me-2"></i> Consultoria mensal</li>
+                                <li><i class="bi bi-check text-success me-2"></i> Suporte 24/7</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer bg-white">
+                            <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#modalEditarPlano">
+                                <i class="bi bi-pencil"></i> Editar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Tabela de Comparação -->
+            <div class="card shadow-sm mt-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Comparação de Planos</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Recurso</th>
+                                    <th class="text-center">Grátis</th>
+                                    <th class="text-center">Premium</th>
+                                    <th class="text-center">Enterprise</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Profissionais</td>
+                                    <td class="text-center">1</td>
+                                    <td class="text-center">5</td>
+                                    <td class="text-center">Ilimitados</td>
+                                </tr>
+                                <tr>
+                                    <td>Agendamentos/mês</td>
+                                    <td class="text-center">50</td>
+                                    <td class="text-center">Ilimitados</td>
+                                    <td class="text-center">Ilimitados</td>
+                                </tr>
+                                <tr>
+                                    <td>WhatsApp Marketing</td>
+                                    <td class="text-center"><i class="bi bi-x text-danger"></i></td>
+                                    <td class="text-center"><i class="bi bi-check text-success"></i></td>
+                                    <td class="text-center"><i class="bi bi-check text-success"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Editar Plano -->
+    <div class="modal fade" id="modalEditarPlano" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Editar Plano</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Nome do Plano</label>
+                            <input type="text" class="form-control" value="Premium">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Valor Mensal (R$)</label>
+                            <input type="number" class="form-control" value="97">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Recursos</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="recurso1" checked>
+                                <label class="form-check-label" for="recurso1">Agendamentos Ilimitados</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="recurso2" checked>
+                                <label class="form-check-label" for="recurso2">WhatsApp Marketing</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        <i class="bi bi-trash me-1"></i> Excluir Plano
+                    </button>
+                    <button type="button" class="btn btn-primary">Salvar Alterações</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Novo Plano -->
+<div class="modal fade" id="modalNovoPlano" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Criar Novo Plano</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formNovoPlano">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nome do Plano*</label>
+                            <input type="text" class="form-control" name="nome" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Nível*</label>
+                            <select class="form-select" name="nivel" required>
+                                <option value="">Selecione...</option>
+                                <option value="basico">Básico</option>
+                                <option value="intermediario">Intermediário</option>
+                                <option value="avancado">Avançado</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Valor Mensal (R$)*</label>
+                            <input type="number" class="form-control" name="valor" step="0.01" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Ciclo de Cobrança*</label>
+                            <select class="form-select" name="ciclo" required>
+                                <option value="mensal">Mensal</option>
+                                <option value="anual">Anual (10% off)</option>
+                                <option value="trimestral">Trimestral (5% off)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Cor de Destaque</label>
+                            <input type="color" class="form-control form-control-color" name="cor" value="#0d6efd">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Recursos Inclusos</label>
+                            <div class="border p-3 rounded">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="recurso1" name="recursos[]" value="agendamentos">
+                                            <label class="form-check-label" for="recurso1">Agendamentos Ilimitados</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="recurso2" name="recursos[]" value="whatsapp">
+                                            <label class="form-check-label" for="recurso2">WhatsApp Marketing</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="recurso3" name="recursos[]" value="relatorios">
+                                            <label class="form-check-label" for="recurso3">Relatórios Avançados</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="recurso4" name="recursos[]" value="suporte">
+                                            <label class="form-check-label" for="recurso4">Suporte Prioritário</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Descrição</label>
+                            <textarea class="form-control" name="descricao" rows="3"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" form="formNovoPlano" class="btn btn-primary">
+                    <i class="bi bi-save me-1"></i> Salvar Plano
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

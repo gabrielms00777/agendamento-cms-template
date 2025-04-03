@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Painel | Nome do Sistema</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --topbar-height: 70px;
+            --cor-primaria: #4e73df; /* Azul do tema */
+        }
+
+        body {
+            background-color: #f8f9fc;
+        }
+
+        /* Sidebar Estilizada */
+        .sidebar-cliente {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            background: white;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            transition: all 0.3s;
+        }
+
+        .sidebar-cliente .nav-link {
+            color: #5a5c69;
+            padding: 1rem 1.5rem;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-cliente .nav-link:hover {
+            color: var(--cor-primaria);
+            background-color: #f8f9fc;
+        }
+
+        .sidebar-cliente .nav-link.active {
+            color: var(--cor-primaria);
+            border-left-color: var(--cor-primaria);
+            font-weight: 600;
+        }
+
+        .sidebar-cliente .divider {
+            border-top: 1px solid #e3e6f0;
+            margin: 1rem 0;
+        }
+
+        /* Topbar */
+        .topbar-cliente {
+            height: var(--topbar-height);
+            margin-left: var(--sidebar-width);
+            background: white;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+
+        /* Main Content */
+        .main-content-cliente {
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            margin-top: var(--topbar-height);
+        }
+
+        /* Cards Personalizados */
+        .card-cliente {
+            border: none;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .card-cliente:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar-cliente d-flex flex-column">
+        <div class="p-4 text-center">
+            <img src="https://via.placeholder.com/150" alt="Logo" class="mb-3" style="max-width: 120px;">
+            <h5 class="mb-0">Nome do Sistema</h5>
+        </div>
+
+        <div class="flex-grow-1 p-3">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">
+                        <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-calendar-check me-2"></i> Meus Agendamentos
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-heart me-2"></i> Favoritos
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-credit-card me-2"></i> Pagamentos
+                    </a>
+                </li>
+                
+                <li class="divider"></li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-gear me-2"></i> Configurações
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-question-circle me-2"></i> Ajuda
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="p-3 border-top">
+            <div class="d-flex align-items-center">
+                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Usuário">
+                <div>
+                    <div class="fw-bold">Nome do Cliente</div>
+                    <small class="text-muted">Plano: Free</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Topbar -->
+    <nav class="topbar-cliente navbar navbar-expand navbar-light bg-white">
+        <div class="container-fluid">
+            <button class="btn btn-link d-md-none rounded-circle me-3">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <!-- Barra de Busca -->
+            <form class="d-none d-sm-inline-block form-inline me-auto">
+                <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar...">
+                    <button class="btn btn-primary" type="button">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Itens da Topbar -->
+            <ul class="navbar-nav ms-auto">
+                <!-- Notificações -->
+                <li class="nav-item dropdown no-arrow mx-1">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge bg-danger badge-counter">3+</span>
+                    </a>
+                </li>
+                
+                <!-- Mensagens -->
+                <li class="nav-item dropdown no-arrow mx-1">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-envelope"></i>
+                        <span class="badge bg-success badge-counter">1</span>
+                    </a>
+                </li>
+                
+                <!-- Usuário -->
+                <li class="nav-item dropdown no-arrow">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="me-2 d-none d-lg-inline text-gray-600 small">Nome do Cliente</span>
+                        <img class="img-profile rounded-circle" src="https://via.placeholder.com/40">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#">
+                            <i class="bi bi-person me-2"></i> Perfil
+                        </a></li>
+                        <li><a class="dropdown-item" href="#">
+                            <i class="bi bi-gear me-2"></i> Configurações
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">
+                            <i class="bi bi-box-arrow-right me-2"></i> Sair
+                        </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Ativa todos os tooltips e popovers
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+        
+        // Dropdowns já funcionam com Bootstrap 5 sem JS adicional
+    </script>
+</body>
+</html>

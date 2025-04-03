@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerente - Painel do Estabelecimento</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --topbar-height: 60px;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            background: #2c3e50;
+            transition: all 0.3s;
+        }
+
+        .topbar {
+            height: var(--topbar-height);
+            margin-left: var(--sidebar-width);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            margin-top: var(--topbar-height);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid #3498db;
+        }
+
+        .calendar-day {
+            height: 100px;
+            border: 1px solid #dee2e6;
+            position: relative;
+        }
+
+        .calendar-day:hover {
+            background-color: #f8f9fa;
+        }
+
+        .appointment-badge {
+            font-size: 0.7rem;
+            margin-bottom: 2px;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        .badge.bg-warning.text-dark {
+            background-color: #ffc107 !important;
+        }
+
+        /* Ajustes para o modal */
+        .modal-body .form-control {
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-body .row {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar d-flex flex-column">
+        <div class="p-3 text-white">
+            <h4 class="text-center">Meu Estabelecimento</h4>
+            <hr class="bg-light">
+        </div>
+        <ul class="nav flex-column flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">
+                    <i class="bi bi-calendar-check me-2"></i> Agenda
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-people me-2"></i> Clientes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-scissors me-2"></i> Serviços
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-cash-coin me-2"></i> Financeiro
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-envelope me-2"></i> Marketing
+                </a>
+            </li>
+            <li class="nav-item mt-auto">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-gear me-2"></i> Configurações
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Topbar -->
+    <nav class="topbar navbar navbar-expand navbar-dark bg-primary shadow-sm">
+        <div class="container-fluid">
+            <span class="navbar-brand">Salão Bella</span>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-1"></i> Gerente
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i> Perfil</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i> Sair</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Financeiro</h2>
+                <div>
+                    <button class="btn btn-outline-secondary me-2">
+                        <i class="bi bi-download me-1"></i> Exportar
+                    </button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#novaTransacaoModal">
+                        <i class="bi bi-plus-lg me-1"></i> Nova Transação
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cards de Resumo Financeiro -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card border-success">
+                        <div class="card-body">
+                            <h6 class="card-title text-success">Receita Total</h6>
+                            <h3 class="mb-0">R$ 28,750</h3>
+                            <small class="text-success">+12% vs mês passado</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-primary">
+                        <div class="card-body">
+                            <h6 class="card-title text-primary">Despesas</h6>
+                            <h3 class="mb-0">R$ 8,420</h3>
+                            <small class="text-danger">+5% vs mês passado</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-info">
+                        <div class="card-body">
+                            <h6 class="card-title text-info">Lucro Líquido</h6>
+                            <h3 class="mb-0">R$ 20,330</h3>
+                            <small class="text-success">+15% vs mês passado</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-warning">
+                        <div class="card-body">
+                            <h6 class="card-title text-warning">Contas a Receber</h6>
+                            <h3 class="mb-0">R$ 5,210</h3>
+                            <small class="text-danger">7 dias em atraso</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Abas de Navegação -->
+            <ul class="nav nav-tabs mb-4" id="financeiroTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="transacoes-tab" data-bs-toggle="tab"
+                        data-bs-target="#transacoes" type="button">Transações</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="relatorios-tab" data-bs-toggle="tab" data-bs-target="#relatorios"
+                        type="button">Relatórios</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="contas-tab" data-bs-toggle="tab" data-bs-target="#contas"
+                        type="button">Contas Bancárias</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="impostos-tab" data-bs-toggle="tab" data-bs-target="#impostos"
+                        type="button">Impostos</button>
+                </li>
+            </ul>
+
+            <!-- Conteúdo das Abas -->
+            <div class="tab-content" id="financeiroTabContent">
+                <!-- Aba Transações -->
+                <div class="tab-pane fade show active" id="transacoes" role="tabpanel">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Últimas Transações</h5>
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-outline-secondary">Hoje</button>
+                                    <button class="btn btn-sm btn-outline-secondary active">Este Mês</button>
+                                    <button class="btn btn-sm btn-outline-secondary">Personalizado</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Data</th>
+                                            <th>Descrição</th>
+                                            <th>Categoria</th>
+                                            <th>Valor</th>
+                                            <th>Status</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>15/06/2023</td>
+                                            <td>
+                                                <strong>Agendamento #1245</strong><br>
+                                                <small class="text-muted">Ana Silva - Corte Feminino</small>
+                                            </td>
+                                            <td>Serviços</td>
+                                            <td class="text-success">R$ 80,00</td>
+                                            <td><span class="badge bg-success">Pago</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary">
+                                                    <i class="bi bi-receipt"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <!-- Mais transações... -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aba Relatórios -->
+                <div class="tab-pane fade" id="relatorios" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Fluxo de Caixa - Últimos 6 Meses</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-container" style="height: 300px;">
+                                        <!-- Espaço para gráfico -->
+                                        <p class="text-center text-muted my-5">Gráfico de fluxo de caixa seria exibido
+                                            aqui</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Receita por Categoria</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-container" style="height: 250px;">
+                                        <!-- Espaço para gráfico de pizza -->
+                                        <p class="text-center text-muted my-4">Gráfico de categorias seria exibido aqui
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Gerar Relatório Personalizado</h5>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Período</label>
+                                        <select class="form-select">
+                                            <option>Últimos 7 dias</option>
+                                            <option selected>Este mês</option>
+                                            <option>Mês anterior</option>
+                                            <option>Trimestre atual</option>
+                                            <option>Personalizado</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Tipo de Relatório</label>
+                                        <select class="form-select">
+                                            <option>Fluxo de Caixa</option>
+                                            <option>Receitas e Despesas</option>
+                                            <option>Serviços Mais Rentáveis</option>
+                                            <option>Clientes Mais Lucrativos</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Formato</label>
+                                        <select class="form-select">
+                                            <option>PDF</option>
+                                            <option>Excel</option>
+                                            <option>HTML</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="bi bi-file-earmark-text me-1"></i> Gerar Relatório
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aba Contas Bancárias -->
+                <div class="tab-pane fade" id="contas" role="tabpanel">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Contas Bancárias</h5>
+                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#novaContaModal">
+                                    <i class="bi bi-plus-lg me-1"></i> Nova Conta
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Banco</th>
+                                            <th>Agência</th>
+                                            <th>Conta</th>
+                                            <th>Tipo</th>
+                                            <th>Saldo</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img src="https://via.placeholder.com/30x20?text=Itaú" class="me-2"
+                                                        style="width: 30px;">
+                                                    Itaú
+                                                </div>
+                                            </td>
+                                            <td>1234</td>
+                                            <td>56789-0</td>
+                                            <td>Corrente</td>
+                                            <td class="text-success">R$ 15.420,00</td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm">
+                                                    <button class="btn btn-outline-primary">
+                                                        <i class="bi bi-pencil"></i>
+                                                    </button>
+                                                    <button class="btn btn-outline-secondary">
+                                                        <i class="bi bi-arrow-left-right"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Mais contas... -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aba Impostos -->
+                <div class="tab-pane fade" id="impostos" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Gestão de Impostos</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card mb-4">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0">Impostos Mensais</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Imposto</th>
+                                                            <th>Valor</th>
+                                                            <th>Vencimento</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>ISS</td>
+                                                            <td>R$ 420,00</td>
+                                                            <td>10/07/2023</td>
+                                                        </tr>
+                                                        <!-- Mais impostos... -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0">Configurações Fiscais</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <form>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Alíquota ISS (%)</label>
+                                                    <input type="number" class="form-control" value="5.00" step="0.01">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Regime Tributário</label>
+                                                    <select class="form-select">
+                                                        <option>Simples Nacional</option>
+                                                        <option selected>Lucro Presumido</option>
+                                                        <option>Lucro Real</option>
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Salvar
+                                                    Configurações</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Nova Transação -->
+    <div class="modal fade" id="novaTransacaoModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Nova Transação</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNovaTransacao">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Tipo*</label>
+                                <select class="form-select" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="receita">Receita</option>
+                                    <option value="despesa">Despesa</option>
+                                    <option value="transferencia">Transferência</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Categoria*</label>
+                                <select class="form-select" required>
+                                    <option value="">Selecione...</option>
+                                    <option>Serviços Prestados</option>
+                                    <option>Venda de Produtos</option>
+                                    <option>Material de Consumo</option>
+                                    <!-- Mais categorias... -->
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Valor (R$)*</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Data*</label>
+                                <input type="date" class="form-control" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Descrição</label>
+                                <textarea class="form-control" rows="2"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Forma de Pagamento*</label>
+                                <select class="form-select" required>
+                                    <option value="">Selecione...</option>
+                                    <option>Dinheiro</option>
+                                    <option>Cartão de Crédito</option>
+                                    <option>Cartão de Débito</option>
+                                    <option>PIX</option>
+                                    <option>Transferência Bancária</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Conta Bancária</label>
+                                <select class="form-select">
+                                    <option value="">Selecione...</option>
+                                    <option>Itaú (****-0)</option>
+                                    <option>Caixa (****-2)</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Anexo</label>
+                                <input type="file" class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Salvar Transação</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Nova Conta Bancária -->
+    <div class="modal fade" id="novaContaModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Nova Conta Bancária</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Banco*</label>
+                            <select class="form-select" required>
+                                <option value="">Selecione...</option>
+                                <option>Itaú</option>
+                                <option>Bradesco</option>
+                                <!-- Mais bancos... -->
+                            </select>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Agência*</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Conta*</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tipo de Conta*</label>
+                            <select class="form-select" required>
+                                <option value="">Selecione...</option>
+                                <option>Conta Corrente</option>
+                                <option>Conta Poupança</option>
+                                <option>Conta Salário</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Saldo Inicial</label>
+                            <input type="text" class="form-control" value="0,00">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Salvar Conta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <style>
+        /* Estilos específicos para o financeiro */
+        .card.border-success .card-title {
+            color: #198754 !important;
+        }
+
+        .card.border-primary .card-title {
+            color: #0d6efd !important;
+        }
+
+        .card.border-info .card-title {
+            color: #0dcaf0 !important;
+        }
+
+        .card.border-warning .card-title {
+            color: #ffc107 !important;
+        }
+
+        /* Ajustes para tabelas */
+        .table td,
+        .table th {
+            vertical-align: middle;
+        }
+
+        /* Espaçamento para os modais */
+        .modal-body .row {
+            margin-bottom: 1rem;
+        }
+
+        /* Pré-visualização de imagens */
+        .img-thumbnail {
+            padding: 0.25rem;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Máscara para valores monetários
+        document.querySelectorAll('input[type="text"][id*="Valor"]').forEach(input => {
+            input.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = (value / 100).toFixed(2) + '';
+                value = value.replace(".", ",");
+                value = value.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+                value = value.replace(/(\d)(\d{3}),/g, "$1.$2,");
+                e.target.value = value;
+            });
+        });
+
+        // Simulação de gráficos (seria substituído por Chart.js na implementação real)
+        function initCharts() {
+            console.log('Gráficos seriam inicializados aqui com Chart.js ou similar');
+        }
+
+        // Inicializar gráficos quando a aba de relatórios for aberta
+        document.getElementById('relatorios-tab').addEventListener('click', initCharts);
+
+        // Validação do formulário de nova transação
+        document.querySelector('#novaTransacaoModal .btn-primary').addEventListener('click', function () {
+            const form = document.getElementById('formNovaTransacao');
+            if (!form.checkValidity()) {
+                alert('Por favor, preencha todos os campos obrigatórios');
+                return;
+            }
+
+            alert('Transação cadastrada com sucesso!');
+            bootstrap.Modal.getInstance(document.getElementById('novaTransacaoModal')).hide();
+            form.reset();
+        });
+    </script>
+</body>
+
+</html>

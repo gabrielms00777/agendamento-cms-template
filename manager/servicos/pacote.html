@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerente - Painel do Estabelecimento</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --topbar-height: 60px;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            background: #2c3e50;
+            transition: all 0.3s;
+        }
+
+        .topbar {
+            height: var(--topbar-height);
+            margin-left: var(--sidebar-width);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            margin-top: var(--topbar-height);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid #3498db;
+        }
+
+        .calendar-day {
+            height: 100px;
+            border: 1px solid #dee2e6;
+            position: relative;
+        }
+
+        .calendar-day:hover {
+            background-color: #f8f9fa;
+        }
+
+        .appointment-badge {
+            font-size: 0.7rem;
+            margin-bottom: 2px;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        .badge.bg-warning.text-dark {
+            background-color: #ffc107 !important;
+        }
+
+        /* Ajustes para o modal */
+        .modal-body .form-control {
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-body .row {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar d-flex flex-column">
+        <div class="p-3 text-white">
+            <h4 class="text-center">Meu Estabelecimento</h4>
+            <hr class="bg-light">
+        </div>
+        <ul class="nav flex-column flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">
+                    <i class="bi bi-calendar-check me-2"></i> Agenda
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-people me-2"></i> Clientes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-scissors me-2"></i> Serviços
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-cash-coin me-2"></i> Financeiro
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-envelope me-2"></i> Marketing
+                </a>
+            </li>
+            <li class="nav-item mt-auto">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-gear me-2"></i> Configurações
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Topbar -->
+    <nav class="topbar navbar navbar-expand navbar-dark bg-primary shadow-sm">
+        <div class="container-fluid">
+            <span class="navbar-brand">Salão Bella</span>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-1"></i> Gerente
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i> Perfil</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i> Sair</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Pacotes de Serviços</h2>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#novoPacoteModal">
+                    <i class="bi bi-box-seam me-1"></i> Novo Pacote
+                </button>
+            </div>
+
+            <!-- Cards de Métricas -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card border-primary">
+                        <div class="card-body">
+                            <h6 class="card-title text-primary">Pacotes Ativos</h6>
+                            <h3 class="mb-0">14</h3>
+                            <small class="text-success">+2 este mês</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-success">
+                        <div class="card-body">
+                            <h6 class="card-title text-success">Vendas Mensais</h6>
+                            <h3 class="mb-0">R$ 8,750</h3>
+                            <small class="text-success">+15% vs mês passado</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-warning">
+                        <div class="card-body">
+                            <h6 class="card-title text-warning">Pacote Mais Popular</h6>
+                            <h5 class="mb-0">Beleza Completa</h5>
+                            <small>28 vendas este mês</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-info">
+                        <div class="card-body">
+                            <h6 class="card-title text-info">Ticket Médio</h6>
+                            <h3 class="mb-0">R$ 225</h3>
+                            <small class="text-success">+10% vs mês passado</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Abas de Navegação -->
+            <ul class="nav nav-tabs mb-4" id="pacotesTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="ativos-tab" data-bs-toggle="tab" data-bs-target="#ativos"
+                        type="button">Pacotes Ativos</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="performance-tab" data-bs-toggle="tab" data-bs-target="#performance"
+                        type="button">Performance</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="inativos-tab" data-bs-toggle="tab" data-bs-target="#inativos"
+                        type="button">Pacotes Inativos</button>
+                </li>
+            </ul>
+
+            <!-- Conteúdo das Abas -->
+            <div class="tab-content" id="pacotesTabContent">
+                <!-- Aba Pacotes Ativos -->
+                <div class="tab-pane fade show active" id="ativos" role="tabpanel">
+                    <div class="row">
+                        <!-- Card de Pacote 1 -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 border-success">
+                                <div class="card-header bg-success text-white">
+                                    <h5 class="mb-0">Beleza Completa</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center mb-3">
+                                        <img src="https://via.placeholder.com/300x200?text=Beleza+Completa"
+                                            class="img-fluid rounded mb-2" alt="Pacote Beleza Completa">
+                                        <h4 class="text-success">R$ 350,00</h4>
+                                        <small class="text-muted">Economize R$ 120,00</small>
+                                    </div>
+                                    <ul class="list-group list-group-flush mb-3">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Corte Feminino
+                                            <span class="badge bg-light text-dark">1h 15min</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Hidratação Premium
+                                            <span class="badge bg-light text-dark">45min</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Manicure Completa
+                                            <span class="badge bg-light text-dark">1h</span>
+                                        </li>
+                                    </ul>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="badge bg-primary">12 vendas este mês</span>
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                                data-bs-target="#editarPacoteModal">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-secondary">
+                                                <i class="bi bi-graph-up"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mais pacotes ativos... -->
+                    </div>
+                </div>
+
+                <!-- Aba Performance -->
+                <div class="tab-pane fade" id="performance" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Vendas de Pacotes (Últimos 30 dias)</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-container" style="height: 300px;">
+                                        <!-- Espaço para gráfico de vendas -->
+                                        <p class="text-center text-muted my-5">Gráfico de vendas por pacote seria
+                                            exibido aqui</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Top 5 Pacotes</h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Beleza Completa
+                                            <span class="badge bg-primary rounded-pill">28</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Dia da Noiva
+                                            <span class="badge bg-primary rounded-pill">15</span>
+                                        </li>
+                                        <!-- Mais itens... -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Conversão de Pacotes</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="progress mb-3" style="height: 30px;">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 65%">
+                                            Vendidos (65%)
+                                        </div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 15%">
+                                            Cancelados (15%)
+                                        </div>
+                                        <div class="progress-bar bg-light text-dark" role="progressbar"
+                                            style="width: 20%">
+                                            Não finalizados (20%)
+                                        </div>
+                                    </div>
+                                    <small class="text-muted">Base: 120 agendamentos com pacotes</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Ticket Médio por Período</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Período</th>
+                                                    <th>Ticket Médio</th>
+                                                    <th>Variação</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Este Mês</td>
+                                                    <td>R$ 225,00</td>
+                                                    <td><span class="badge bg-success">+10%</span></td>
+                                                </tr>
+                                                <!-- Mais linhas... -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aba Pacotes Inativos -->
+                <div class="tab-pane fade" id="inativos" role="tabpanel">
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle me-2"></i> 5 pacotes inativos no momento
+                    </div>
+                    <div class="row">
+                        <!-- Card de Pacote Inativo -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 border-secondary">
+                                <div class="card-header bg-secondary text-white">
+                                    <h5 class="mb-0">Pacote de Verão</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center mb-3">
+                                        <img src="https://via.placeholder.com/300x200?text=Pacote+Verão"
+                                            class="img-fluid rounded mb-2" alt="Pacote Verão">
+                                        <h4>R$ 280,00</h4>
+                                        <small class="text-muted">Fora de temporada</small>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="badge bg-danger">Inativo</span>
+                                        <button class="btn btn-sm btn-outline-success">
+                                            Reativar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mais pacotes inativos... -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Novo Pacote -->
+    <div class="modal fade" id="novoPacoteModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Criar Novo Pacote</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNovoPacote">
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label for="pacoteNome" class="form-label">Nome do Pacote*</label>
+                                <input type="text" class="form-control" id="pacoteNome" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="pacoteCategoria" class="form-label">Categoria*</label>
+                                <select class="form-select" id="pacoteCategoria" required>
+                                    <option value="">Selecione...</option>
+                                    <option>Beleza</option>
+                                    <option>Bem-Estar</option>
+                                    <option>Noiva</option>
+                                    <option>Especial</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="pacoteDescricao" class="form-label">Descrição*</label>
+                                <textarea class="form-control" id="pacoteDescricao" rows="2" required></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="pacoteValor" class="form-label">Valor do Pacote (R$)*</label>
+                                <input type="text" class="form-control" id="pacoteValor" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="pacoteDesconto" class="form-label">Desconto em relação aos serviços
+                                    separados</label>
+                                <input type="text" class="form-control" id="pacoteDesconto" value="R$ 0,00" disabled>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Serviços Incluídos*</label>
+                                <div class="border p-3 rounded">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <select class="form-select" id="servicoParaAdicionar">
+                                                <option value="">Selecione um serviço...</option>
+                                                <option value="1">Corte Feminino (R$ 80,00)</option>
+                                                <option value="2">Hidratação Premium (R$ 120,00)</option>
+                                                <!-- Mais serviços... -->
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select class="form-select" id="servicoProfissional">
+                                                <option value="">Qualquer profissional</option>
+                                                <option value="1">Carlos Andrade</option>
+                                                <option value="2">Juliana Santos</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button type="button" class="btn btn-primary w-100"
+                                                id="btnAdicionarServico">
+                                                <i class="bi bi-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-sm" id="tabelaServicosPacote">
+                                            <thead>
+                                                <tr>
+                                                    <th>Serviço</th>
+                                                    <th>Profissional</th>
+                                                    <th>Valor</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Serviços serão adicionados dinamicamente aqui -->
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="2">Total Separado</th>
+                                                    <th id="totalServicos">R$ 0,00</th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr class="table-success">
+                                                    <th colspan="2">Economia do Pacote</th>
+                                                    <th id="economiaPacote">R$ 0,00</th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="pacoteFoto" class="form-label">Foto do Pacote</label>
+                                <input class="form-control" type="file" id="pacoteFoto" accept="image/*">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Pré-visualização</label>
+                                <div class="border p-2 text-center">
+                                    <img id="pacoteFotoPreview"
+                                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='150' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='%23f8f9fa'/%3E%3Ctext x='100' y='75' font-family='Arial' font-size='14' fill='%236c757d' text-anchor='middle'%3EPré-visualização%3C/text%3E%3C/svg%3E"
+                                        class="img-fluid" style="max-height: 100px;">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="pacoteValidade" class="form-label">Validade (dias)</label>
+                                <input type="number" class="form-control" id="pacoteValidade" min="0"
+                                    placeholder="0 para sem validade">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="pacoteStatus" class="form-label">Status*</label>
+                                <select class="form-select" id="pacoteStatus" required>
+                                    <option value="ativo" selected>Ativo</option>
+                                    <option value="inativo">Inativo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnSalvarPacote">Salvar Pacote</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Edição de Pacote -->
+    <div class="modal fade" id="editarPacoteModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Editar Pacote "Beleza Completa"</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Conteúdo similar ao modal de novo pacote, mas pré-preenchido -->
+                    <form id="formEditarPacote">
+                        <!-- Formulário de edição aqui -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Salvar Alterações</button>
+                    <button type="button" class="btn btn-outline-danger">
+                        <i class="bi bi-trash"></i> Excluir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <style>
+        /* Estilos específicos para a tela de pacotes */
+        .card.h-100 {
+            transition: transform 0.3s ease;
+        }
+
+        .card.h-100:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        /* Estilos para a tabela de serviços no pacote */
+        #tabelaServicosPacote tbody tr {
+            cursor: pointer;
+        }
+
+        #tabelaServicosPacote tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Ajustes para os modais */
+        .modal-body .form-control,
+        .modal-body .form-select {
+            margin-bottom: 1rem;
+        }
+
+        /* Espaçamento para os cards de métricas */
+        .card.border-primary,
+        .card.border-success,
+        .card.border-warning,
+        .card.border-info {
+            border-width: 2px !important;
+        }
+    </style>
+
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Lógica para o modal de novo pacote
+        document.getElementById('pacoteFoto').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    document.getElementById('pacoteFotoPreview').src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Array para armazenar serviços do pacote
+        let servicosPacote = [];
+
+        // Adicionar serviço ao pacote
+        document.getElementById('btnAdicionarServico').addEventListener('click', function () {
+            const servicoSelect = document.getElementById('servicoParaAdicionar');
+            const servicoId = servicoSelect.value;
+            const servicoTexto = servicoSelect.options[servicoSelect.selectedIndex].text;
+            const profissionalSelect = document.getElementById('servicoProfissional');
+            const profissionalId = profissionalSelect.value;
+            const profissionalTexto = profissionalSelect.options[profissionalSelect.selectedIndex].text;
+
+            if (!servicoId) {
+                alert('Selecione um serviço para adicionar');
+                return;
+            }
+
+            // Extrair valor do serviço do texto
+            const valorMatch = servicoTexto.match(/R\$\s?(\d+,\d{2})/);
+            const valor = valorMatch ? valorMatch[1] : '0,00';
+
+            // Adicionar ao array
+            servicosPacote.push({
+                id: servicoId,
+                nome: servicoTexto.split(' (R$')[0],
+                profissionalId: profissionalId,
+                profissional: profissionalTexto,
+                valor: valor
+            });
+
+            // Atualizar tabela
+            atualizarTabelaServicos();
+
+            // Limpar seleção
+            servicoSelect.value = '';
+            profissionalSelect.value = '';
+        });
+
+        function atualizarTabelaServicos() {
+            const tbody = document.querySelector('#tabelaServicosPacote tbody');
+            tbody.innerHTML = '';
+
+            let total = 0;
+
+            servicosPacote.forEach((servico, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${servico.nome}</td>
+                    <td>${servico.profissional}</td>
+                    <td>R$ ${servico.valor}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-danger" onclick="removerServico(${index})">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+
+                // Calcular total
+                total += parseFloat(servico.valor.replace(',', '.'));
+            });
+
+            // Atualizar totais
+            document.getElementById('totalServicos').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+
+            // Calcular economia quando o valor do pacote for definido
+            const valorPacote = document.getElementById('pacoteValor').value;
+            if (valorPacote) {
+                calcularEconomia(total, valorPacote);
+            }
+        }
+
+        function removerServico(index) {
+            servicosPacote.splice(index, 1);
+            atualizarTabelaServicos();
+        }
+
+        function calcularEconomia(totalServicos, valorPacote) {
+            const valorPacoteNum = parseFloat(valorPacote.replace('R$ ', '').replace('.', '').replace(',', '.'));
+            const economia = totalServicos - valorPacoteNum;
+
+            document.getElementById('economiaPacote').textContent =
+                `R$ ${economia.toFixed(2).replace('.', ',')}`;
+
+            document.getElementById('pacoteDesconto').value =
+                `R$ ${economia.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Máscara para valor monetário
+        document.getElementById('pacoteValor').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = (value / 100).toFixed(2) + '';
+            value = value.replace(".", ",");
+            value = value.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+            value = value.replace(/(\d)(\d{3}),/g, "$1.$2,");
+            e.target.value = value;
+
+            // Calcular economia quando o valor do pacote é alterado
+            const totalText = document.getElementById('totalServicos').textContent;
+            const total = parseFloat(totalText.replace('R$ ', '').replace('.', '').replace(',', '.'));
+            calcularEconomia(total, e.target.value);
+        });
+
+        // Validação do formulário de novo pacote
+        document.getElementById('btnSalvarPacote').addEventListener('click', function () {
+            const form = document.getElementById('formNovoPacote');
+            if (!form.checkValidity()) {
+                alert('Por favor, preencha todos os campos obrigatórios');
+                return;
+            }
+
+            if (servicosPacote.length === 0) {
+                alert('Adicione pelo menos um serviço ao pacote');
+                return;
+            }
+
+            // Simulação de salvamento
+            const novoPacote = {
+                nome: document.getElementById('pacoteNome').value,
+                categoria: document.getElementById('pacoteCategoria').value,
+                servicos: servicosPacote,
+                valor: document.getElementById('pacoteValor').value,
+                foto: document.getElementById('pacoteFoto').files[0]?.name || null,
+                validade: document.getElementById('pacoteValidade').value,
+                status: document.getElementById('pacoteStatus').value
+            };
+
+            console.log('Novo pacote:', novoPacote);
+            alert('Pacote cadastrado com sucesso!');
+
+            // Fechar o modal e limpar formulário
+            bootstrap.Modal.getInstance(document.getElementById('novoPacoteModal')).hide();
+            form.reset();
+            servicosPacote = [];
+            atualizarTabelaServicos();
+            document.getElementById('pacoteFotoPreview').src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='150' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='%23f8f9fa'/%3E%3Ctext x='100' y='75' font-family='Arial' font-size='14' fill='%236c757d' text-anchor='middle'%3EPré-visualização%3C/text%3E%3C/svg%3E";
+        });
+
+        // Simulação de dados para os gráficos (seria substituído por dados reais)
+        function carregarDadosPerformance() {
+            // Esta função seria implementada com Chart.js ou similar
+            console.log('Carregando dados de performance...');
+        }
+
+        // Carregar dados quando a aba performance for aberta
+        document.getElementById('performance-tab').addEventListener('click', carregarDadosPerformance);
+    </script>
+    <script>
+        // Pré-visualização da foto no modal de novo serviço
+        document.getElementById('servicoFoto').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    document.getElementById('servicoFotoPreview').src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Pré-visualização da foto no modal de edição
+        document.getElementById('editServicoFoto').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    document.getElementById('editServicoFotoPreview').src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Máscara para valor monetário
+        function aplicarMascaraValor(input) {
+            input.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = (value / 100).toFixed(2) + '';
+                value = value.replace(".", ",");
+                value = value.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+                value = value.replace(/(\d)(\d{3}),/g, "$1.$2,");
+                e.target.value = value;
+            });
+        }
+
+        aplicarMascaraValor(document.getElementById('servicoValor'));
+        aplicarMascaraValor(document.getElementById('editServicoValor'));
+
+        // Validação do formulário de novo serviço
+        document.getElementById('btnSalvarServico').addEventListener('click', function () {
+            const form = document.getElementById('formNovoServico');
+            if (!form.checkValidity()) {
+                alert('Por favor, preencha todos os campos obrigatórios');
+                return;
+            }
+
+            // Simulação de salvamento
+            const novoServico = {
+                nome: document.getElementById('servicoNome').value,
+                categoria: document.getElementById('servicoCategoria').value,
+                duracao: `${document.getElementById('servicoDuracaoHoras').value}h ${document.getElementById('servicoDuracaoMinutos').value}min`,
+                valor: document.getElementById('servicoValor').value,
+                ativo: document.getElementById('servicoAtivo').checked
+            };
+
+            console.log('Novo serviço:', novoServico);
+            alert('Serviço cadastrado com sucesso!');
+            bootstrap.Modal.getInstance(document.getElementById('novoServicoModal')).hide();
+            form.reset();
+            document.getElementById('servicoFotoPreview').src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='150' viewBox='0 0 200 150'%3E%3Crect width='200' height='150' fill='%23f8f9fa'/%3E%3Ctext x='100' y='75' font-family='Arial' font-size='14' fill='%236c757d' text-anchor='middle'%3EPré-visualização%3C/text%3E%3C/svg%3E";
+        });
+
+        // Validação do formulário de edição
+        document.getElementById('btnSalvarEdicaoServico').addEventListener('click', function () {
+            const form = document.getElementById('formEditarServico');
+            if (!form.checkValidity()) {
+                alert('Por favor, preencha todos os campos obrigatórios');
+                return;
+            }
+
+            // Simulação de salvamento
+            const servicoEditado = {
+                id: 1, // ID seria obtido dinamicamente na implementação real
+                nome: document.getElementById('editServicoNome').value,
+                categoria: document.getElementById('editServicoCategoria').value,
+                duracao: `${document.getElementById('editServicoDuracaoHoras').value}h ${document.getElementById('editServicoDuracaoMinutos').value}min`,
+                valor: document.getElementById('editServicoValor').value,
+                ativo: document.getElementById('editServicoAtivo').checked
+            };
+
+            console.log('Serviço editado:', servicoEditado);
+            alert('Alterações salvas com sucesso!');
+            bootstrap.Modal.getInstance(document.getElementById('editarServicoModal')).hide();
+        });
+
+        // Carregar dados do serviço para edição (simulação)
+        document.getElementById('editarServicoModal').addEventListener('show.bs.modal', function (event) {
+            // Na implementação real, aqui buscaria os dados do serviço por AJAX
+            const button = event.relatedTarget;
+            const servicoId = button.getAttribute('data-servico-id');
+            console.log('Editando serviço ID:', servicoId);
+
+            // Simulação de carregamento de dados
+            // document.getElementById('editServicoNome').value = "Nome do serviço";
+            // etc...
+        });
+    </script>
+</body>
+
+</html>

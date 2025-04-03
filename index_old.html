@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Site CMS - Página Inicial</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/random/1200x600/?technology');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            margin-bottom: 50px;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .post-card {
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+            height: 100%;
+        }
+        
+        .post-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .post-meta {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            background-color: #212529;
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de Navegação -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Meu Site CMS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contato</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="/admin" class="btn btn-outline-light me-2">Área Admin</a>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Buscar...">
+                        <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-4">Bem-vindo ao Nosso Site</h1>
+            <p class="lead mb-5">Conteúdo dinâmico gerenciado pelo nosso CMS poderoso</p>
+            <a href="#featured-posts" class="btn btn-primary btn-lg me-2">Ver Posts</a>
+            <a href="#" class="btn btn-outline-light btn-lg">Saiba Mais</a>
+        </div>
+    </section>
+
+    <!-- Destaques -->
+    <section class="container mb-5">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="feature-icon">
+                    <i class="bi bi-lightning-charge"></i>
+                </div>
+                <h3>Rápido</h3>
+                <p>Nosso CMS foi otimizado para performance máxima e tempo de carregamento mínimo.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-icon">
+                    <i class="bi bi-shield-lock"></i>
+                </div>
+                <h3>Seguro</h3>
+                <p>Proteção avançada contra vulnerabilidades com atualizações constantes.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-icon">
+                    <i class="bi bi-phone"></i>
+                </div>
+                <h3>Responsivo</h3>
+                <p>Design que se adapta perfeitamente a qualquer dispositivo móvel ou desktop.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Posts em Destaque -->
+    <section id="featured-posts" class="container mb-5">
+        <h2 class="text-center mb-5">Posts em Destaque</h2>
+        <div class="row">
+            <!-- Post 1 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card post-card">
+                    <img src="https://source.unsplash.com/random/600x400/?technology" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-2">Tecnologia</span>
+                        <h5 class="card-title">Como o CMS revoluciona a criação de sites</h5>
+                        <p class="card-text">Descubra como nosso sistema de gerenciamento de conteúdo pode transformar sua presença online.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="post-meta"><i class="bi bi-person"></i> Admin • <i class="bi bi-calendar"></i> 15/05/2023</small>
+                            <a href="#" class="btn btn-sm btn-outline-primary">Ler mais</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Post 2 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card post-card">
+                    <img src="https://source.unsplash.com/random/600x400/?design" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <span class="badge bg-success mb-2">Design</span>
+                        <h5 class="card-title">Tendências de design web para 2023</h5>
+                        <p class="card-text">As principais tendências que estão moldando a experiência do usuário neste ano.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="post-meta"><i class="bi bi-person"></i> Editor • <i class="bi bi-calendar"></i> 10/05/2023</small>
+                            <a href="#" class="btn btn-sm btn-outline-primary">Ler mais</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Post 3 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card post-card">
+                    <img src="https://source.unsplash.com/random/600x400/?seo" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <span class="badge bg-warning text-dark mb-2">SEO</span>
+                        <h5 class="card-title">Otimização para motores de busca</h5>
+                        <p class="card-text">Dicas essenciais para melhorar o posicionamento do seu site nos resultados de pesquisa.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="post-meta"><i class="bi bi-person"></i> Admin • <i class="bi bi-calendar"></i> 05/05/2023</small>
+                            <a href="#" class="btn btn-sm btn-outline-primary">Ler mais</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="#" class="btn btn-primary">Ver todos os posts</a>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="bg-light py-5 mb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <h3 class="mb-3">Assine nossa newsletter</h3>
+                    <p class="mb-4">Receba as últimas atualizações e conteúdos exclusivos diretamente no seu e-mail.</p>
+                    <form class="row g-2 justify-content-center">
+                        <div class="col-md-8">
+                            <input type="email" class="form-control" placeholder="Seu melhor e-mail">
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary w-100">Assinar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5>Meu Site CMS</h5>
+                    <p>Uma solução completa para gerenciamento de conteúdo web, oferecendo flexibilidade e poder para criar sites incríveis.</p>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-2"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Links Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Home</a></li>
+                        <li><a href="#" class="text-white">Blog</a></li>
+                        <li><a href="#" class="text-white">Sobre</a></li>
+                        <li><a href="#" class="text-white">Contato</a></li>
+                        <li><a href="/admin" class="text-white">Área Admin</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Categorias</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Tecnologia</a></li>
+                        <li><a href="#" class="text-white">Design</a></li>
+                        <li><a href="#" class="text-white">Marketing</a></li>
+                        <li><a href="#" class="text-white">SEO</a></li>
+                        <li><a href="#" class="text-white">Desenvolvimento</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h5>Contato</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-geo-alt me-2"></i> São Paulo, SP</li>
+                        <li><i class="bi bi-envelope me-2"></i> contato@meusite.com</li>
+                        <li><i class="bi bi-phone me-2"></i> (11) 99999-9999</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 Meu Site CMS. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

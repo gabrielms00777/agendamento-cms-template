@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgendaPro - Solução Completa para Agendamentos</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary: #4e73df;
+            --secondary: #f8f9fc;
+            --dark: #5a5c69;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary) 0%, #224abe 100%);
+            color: white;
+            padding: 5rem 0;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .client-logo {
+            height: 50px;
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.3s;
+        }
+        
+        .client-logo:hover {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+        
+        .pricing-card {
+            transition: transform 0.3s;
+            border: none;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="bi bi-calendar-check"></i> AgendaPro
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Funcionalidades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pricing">Planos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#clients">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contato</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-outline-primary" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-primary" href="/register">Experimente Grátis</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Transforme seu negócio com agendamentos online</h1>
+                    <p class="lead mb-4">Controle sua agenda, reduza faltas e aumente suas vendas com nossa solução completa para estabelecimentos.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="/register" class="btn btn-light btn-lg px-4">
+                            Comece agora - Grátis
+                        </a>
+                        <a href="#demo" class="btn btn-outline-light btn-lg px-4">
+                            <i class="bi bi-play-circle"></i> Ver vídeo
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block">
+                    <img src="https://via.placeholder.com/600x400" alt="Dashboard" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section class="py-5 bg-light" id="clients">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Já utilizam nossa plataforma</h2>
+                <p class="text-muted">Mais de 1.000 estabelecimentos em todo o país</p>
+            </div>
+            <div class="row justify-content-center g-4">
+                <div class="col-6 col-md-2 text-center">
+                    <a href="/salon-do-ze" class="d-block">
+                        <img src="https://via.placeholder.com/150x50?text=Salão+do+Zé" alt="Salão do Zé" class="client-logo img-fluid">
+                    </a>
+                </div>
+                <div class="col-6 col-md-2 text-center">
+                    <a href="/beleza-total" class="d-block">
+                        <img src="https://via.placeholder.com/150x50?text=Beleza+Total" alt="Beleza Total" class="client-logo img-fluid">
+                    </a>
+                </div>
+                <!-- Mais clientes... -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5" id="features">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Tudo que você precisa em um só lugar</h2>
+                <p class="text-muted">Funcionalidades pensadas para otimizar seu tempo</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <div class="feature-icon">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <h4>Agenda Inteligente</h4>
+                        <p class="text-muted">Evite conflitos de horários e otimize sua agenda com nosso sistema automático.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <div class="feature-icon">
+                            <i class="bi bi-whatsapp"></i>
+                        </div>
+                        <h4>Lembretes Automáticos</h4>
+                        <p class="text-muted">Reduza faltas com lembretes por WhatsApp e SMS configuráveis.</p>
+                    </div>
+                </div>
+                <!-- Mais features... -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="py-5 bg-light" id="pricing">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Planos Acessíveis</h2>
+                <p class="text-muted">Escolha o que melhor se adapta ao seu negócio</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card pricing-card h-100">
+                        <div class="card-body text-center p-4">
+                            <h5 class="card-title">Básico</h5>
+                            <h3 class="mb-4">R$ 0<span class="text-muted fs-6">/mês</span></h3>
+                            <ul class="list-unstyled mb-4">
+                                <li class="mb-2"><i class="bi bi-check text-success me-2"></i>1 Profissional</li>
+                                <li class="mb-2"><i class="bi bi-check text-success me-2"></i>50 agendamentos/mês</li>
+                                <li class="mb-2"><i class="bi bi-x text-danger me-2"></i>WhatsApp Marketing</li>
+                            </ul>
+                            <a href="/register" class="btn btn-outline-primary w-100">Começar agora</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mais planos... -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-primary text-white">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-4">Pronto para transformar seu negócio?</h2>
+            <p class="lead mb-4">Experimente gratuitamente por 14 dias. Sem necessidade de cartão de crédito.</p>
+            <a href="/register" class="btn btn-light btn-lg px-5">Criar minha conta agora</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5><i class="bi bi-calendar-check"></i> AgendaPro</h5>
+                    <p class="text-muted">A solução completa para gestão de agendamentos para pequenos e médios negócios.</p>
+                </div>
+                <!-- Mais colunas... -->
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="text-center text-muted">
+                <small>© 2023 AgendaPro. Todos os direitos reservados.</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Admin - Painel Geral</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --topbar-height: 60px;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            background: #2c3e50;
+            transition: all 0.3s;
+        }
+
+        .topbar {
+            height: var(--topbar-height);
+            margin-left: var(--sidebar-width);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            margin-top: var(--topbar-height);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid #3498db;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .timeline-badge {
+            position: absolute;
+            left: -20px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .timeline-content {
+            padding-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar d-flex flex-column">
+        <div class="p-3 text-white">
+            <h4 class="text-center">Admin Geral</h4>
+            <hr class="bg-light">
+        </div>
+        <ul class="nav flex-column flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">
+                    <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-building me-2"></i> Estabelecimentos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-people me-2"></i> Usuários
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-credit-card me-2"></i> Assinaturas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-graph-up me-2"></i> Analytics
+                </a>
+            </li>
+            <li class="nav-item mt-auto">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-gear me-2"></i> Configurações
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Topbar -->
+    <nav class="topbar navbar navbar-expand navbar-dark bg-primary shadow-sm">
+        <div class="container-fluid">
+            <span class="navbar-brand">Painel de Controle</span>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-1"></i> Super Admin
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i> Perfil</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i> Sair</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content - Analytics -->
+<div class="main-content">
+    <div class="container-fluid">
+        <!-- Cabeçalho + Filtros -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="bi bi-graph-up me-2"></i> Analytics</h2>
+            <div class="btn-group">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-calendar me-1"></i> Últimos 30 dias
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">Hoje</a></li>
+                    <li><a class="dropdown-item" href="#">Últimos 7 dias</a></li>
+                    <li><a class="dropdown-item active" href="#">Últimos 30 dias</a></li>
+                    <li><a class="dropdown-item" href="#">Este mês</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Personalizado...</a></li>
+                </ul>
+                <button class="btn btn-outline-primary">
+                    <i class="bi bi-download me-1"></i> Exportar
+                </button>
+            </div>
+        </div>
+
+        <!-- Cards Métricas Rápidas -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="card border-primary">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="text-muted">Receita Total</h6>
+                                <h3 class="mb-0">R$ 24,580</h3>
+                                <small class="text-success"><i class="bi bi-arrow-up"></i> 12% vs período anterior</small>
+                            </div>
+                            <div class="bg-primary bg-opacity-10 p-3 rounded">
+                                <i class="bi bi-currency-dollar text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-success">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="text-muted">Novos Estabelecimentos</h6>
+                                <h3 class="mb-0">18</h3>
+                                <small class="text-success"><i class="bi bi-arrow-up"></i> 5% vs período anterior</small>
+                            </div>
+                            <div class="bg-success bg-opacity-10 p-3 rounded">
+                                <i class="bi bi-building text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-warning">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="text-muted">Agendamentos</h6>
+                                <h3 class="mb-0">1,240</h3>
+                                <small class="text-danger"><i class="bi bi-arrow-down"></i> 3% vs período anterior</small>
+                            </div>
+                            <div class="bg-warning bg-opacity-10 p-3 rounded">
+                                <i class="bi bi-calendar-check text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-info">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="text-muted">Taxa de Retenção</h6>
+                                <h3 class="mb-0">84%</h3>
+                                <small class="text-success"><i class="bi bi-arrow-up"></i> 7% vs período anterior</small>
+                            </div>
+                            <div class="bg-info bg-opacity-10 p-3 rounded">
+                                <i class="bi bi-arrow-repeat text-info"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfico de Receita -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Receita Mensal</h5>
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-outline-secondary active">Diário</button>
+                    <button class="btn btn-outline-secondary">Semanal</button>
+                    <button class="btn btn-outline-secondary">Mensal</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="chart-container" style="height: 300px;">
+                    <!-- Espaço para gráfico de linhas (será implementado com Chart.js) -->
+                    <div class="bg-light rounded d-flex justify-content-center align-items-center" style="height: 100%;">
+                        <div class="text-center text-muted">
+                            <i class="bi bi-bar-chart" style="font-size: 2rem;"></i>
+                            <p class="mt-2">Gráfico de receita por período</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráficos Secundários -->
+        <div class="row g-4">
+            <!-- Distribuição de Planos -->
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Distribuição de Planos</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" style="height: 250px;">
+                            <!-- Gráfico de pizza -->
+                            <div class="bg-light rounded d-flex justify-content-center align-items-center" style="height: 100%;">
+                                <div class="text-center text-muted">
+                                    <i class="bi bi-pie-chart" style="font-size: 2rem;"></i>
+                                    <p class="mt-2">Participação de cada plano</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-center mt-3">
+                            <div class="col-4">
+                                <span class="badge bg-secondary">Grátis: 32%</span>
+                            </div>
+                            <div class="col-4">
+                                <span class="badge bg-success">Premium: 54%</span>
+                            </div>
+                            <div class="col-4">
+                                <span class="badge bg-primary">Enterprise: 14%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Estabelecimentos -->
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Top 5 Estabelecimentos</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Estabelecimento</th>
+                                        <th class="text-end">Agendamentos</th>
+                                        <th class="text-end">Receita</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Salão Bella</td>
+                                        <td class="text-end">187</td>
+                                        <td class="text-end text-success">R$ 1,870</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Clínica Saúde</td>
+                                        <td class="text-end">142</td>
+                                        <td class="text-end text-success">R$ 2,840</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Academia Fit</td>
+                                        <td class="text-end">128</td>
+                                        <td class="text-end text-success">R$ 1,280</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabela Detalhada -->
+        <div class="card shadow-sm mt-4">
+            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Detalhamento por Estabelecimento</h5>
+                <button class="btn btn-sm btn-outline-secondary">
+                    <i class="bi bi-gear"></i> Personalizar Colunas
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Estabelecimento</th>
+                                <th class="text-end">Agendamentos</th>
+                                <th class="text-end">Taxa de Cancel.</th>
+                                <th class="text-end">Receita</th>
+                                <th class="text-end">Clientes Novos</th>
+                                <th class="text-end">Conversão</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Salão Bella</td>
+                                <td class="text-end">187</td>
+                                <td class="text-end text-danger">8%</td>
+                                <td class="text-end">R$ 1,870</td>
+                                <td class="text-end">23</td>
+                                <td class="text-end text-success">14%</td>
+                            </tr>
+                            <!-- Mais linhas... -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Exportar Dados -->
+<div class="modal fade" id="modalExportar" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Exportar Relatório</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Formato</label>
+                        <select class="form-select">
+                            <option>PDF</option>
+                            <option>Excel (XLSX)</option>
+                            <option>CSV</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Período</label>
+                        <select class="form-select">
+                            <option>Últimos 30 dias</option>
+                            <option>Este mês</option>
+                            <option>Personalizado...</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">
+                    <i class="bi bi-download me-1"></i> Exportar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- Script para gráficos (exemplo com Chart.js) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Exemplo de implementação real dos gráficos:
+    document.addEventListener('DOMContentLoaded', function() {
+        // Gráfico de Receita (seria implementado com dados reais)
+        const revenueCtx = document.createElement('canvas');
+        revenueCtx.style.height = '300px';
+        document.querySelector('.chart-container').replaceWith(revenueCtx);
+        
+        new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                datasets: [{
+                    label: 'Receita (R$)',
+                    data: [12000, 19000, 15000, 18000, 22000, 24580],
+                    borderColor: '#0d6efd',
+                    tension: 0.1
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+    });
+</script>
+
+
+</body>
+
+</html>
